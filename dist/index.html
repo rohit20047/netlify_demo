@@ -1,0 +1,97 @@
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to Link</title>
+</head>
+<body>
+  <div>
+    <h2>Upload PDF</h2>
+    <p id="message"></p>
+    <form id="uploadForm" action="/.netlify/functions/api/upload" " method="POST" enctype="multipart/form-data">
+      <input type="file" name="pdf">
+      <input type="submit" value="Upload">
+    </form>
+    <p id="uploadedFile"></p>
+  </div>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  const formData = new FormData(this);
+  fetch('/.netlify/functions/api/upload', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.error) {
+      document.getElementById('message').innerText = data.error;
+    } else {
+      const fileUrl = `/${data.file}`;
+      const fullUrl = `${location.origin}${fileUrl}`;
+      console.log(`${data.file}`);
+      document.getElementById('message').innerText = 'File uploaded!';
+      document.getElementById('uploadedFile').innerHTML = `File uploaded at: <a href="${fileUrl}" target="_blank">${fullUrl}</a>`;
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    document.getElementById('message').innerText = 'An error occurred during the upload.';
+  });
+});
+
+
+  </script>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to Link</title>
+</head>
+<body>
+  <div>
+    <h2>Upload PDF</h2>
+    <p id="message"></p>
+    <form id="uploadForm" action="/.netlify/functions/api/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="pdf">
+      <input type="submit" value="Upload">
+    </form>
+    <p id="uploadedFile"></p>
+  </div>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+      fetch('/.netlify/functions/api/upload', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          document.getElementById('message').innerText = data.error;
+        } else {
+          const fileUrl = data.url; // Use the provided URL directly
+          document.getElementById('message').innerText = 'File uploaded!';
+          document.getElementById('uploadedFile').innerHTML = `File uploaded at: <a href="${fileUrl}" target="_blank">${fileUrl}</a>`;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('message').innerText = 'An error occurred during the upload.';
+      });
+    });
+  </script>
+</body>
+</html>

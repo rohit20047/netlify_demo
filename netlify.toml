@@ -1,0 +1,9 @@
+[build]
+  functions = "functions" # Directory for Netlify functions
+  command = "npm run build" # Build command
+  publish = "dist" # Directory for static files
+
+[[redirects]]
+  from = "/api/*" # Redirects for API calls
+  to = "/.netlify/functions/:splat" # Forward to serverless functions
+  status = 200 # Status code for redirects
